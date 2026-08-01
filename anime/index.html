@@ -26,10 +26,20 @@
         <!-- Video Player View (Hidden by default) -->
         <div id="playerView" class="hidden mb-8">
             <button onclick="goBack()" class="mb-4 text-sm bg-zinc-800 px-4 py-2 rounded-lg hover:bg-zinc-700 transition">&larr; Back to Search</button>
-            <div class="aspect-video w-full bg-black rounded-xl overflow-hidden shadow-2xl border border-zinc-800">
+            
+            <div class="aspect-video w-full bg-black rounded-xl overflow-hidden shadow-2xl border border-zinc-800 mb-6">
                 <iframe id="videoPlayer" src="" class="w-full h-full" allowfullscreen></iframe>
             </div>
-            <h2 id="watchTitle" class="text-2xl font-bold mt-4"></h2>
+            
+            <h2 id="watchTitle" class="text-2xl font-bold mb-4"></h2>
+            
+            <!-- Episode Selector Grid -->
+            <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+                <h3 class="text-sm font-semibold text-zinc-400 mb-3 uppercase tracking-wider">Select Episode</h3>
+                <div id="episodeGrid" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-2">
+                    <!-- Dynamic episode buttons injected here -->
+                </div>
+            </div>
         </div>
 
         <!-- Search Results Grid -->
@@ -40,6 +50,10 @@
 
     <!-- JavaScript Logic -->
     <script>
+        let currentAnimeId = null;
+        let currentAnimeTitle = '';
+        let totalEpisodes = 12;
+
         async function searchAnime() {
             const query = document.getElementById('searchInput').value.trim();
             if (!query) return;
@@ -59,6 +73,7 @@
                             coverImage {
                                 large
                             }
+                            episodes
                         }
                     }
                 }
@@ -84,7 +99,7 @@
                     const title = anime.title.english || anime.title.romaji;
                     const card = document.createElement('div');
                     card.className = 'bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden group cursor-pointer hover:border-red-500 transition';
-                    card.onclick = () => playAnime(anime.id, title);
+                    card.onclick = () => selectAnime(anime.id, title, anime.episodes);
 
                     card.innerHTML = `
                         <div class="aspect-[3/4] overflow-hidden bg-zinc-800">
@@ -101,15 +116,48 @@
             }
         }
 
-        function playAnime(id, title) {
+        function selectAnime(id, title, eps) {
+            currentAnimeId = id;
+            currentAnimeTitle = title;
+            totalEpisodes = eps || 12; // Fallback if episode count is missing
+
             document.getElementById('resultsGrid').classList.add('hidden');
             document.getElementById('playerView').classList.remove('hidden');
-            
             document.getElementById('watchTitle').innerText = title;
-            // Injecting your MegaPlay link format using the AniList ID and Episode 1
-            document.getElementById('videoPlayer').src = `https://megaplay.buzz/embed/${id}/ep-1`;
-            
+
+            buildEpisodeList();
+            playEpisode(1); // Default to Episode 1
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function buildEpisodeList() {
+            const episodeGrid = document.getElementById('episodeGrid');
+            episodeGrid.innerHTML = '';
+
+            for (let i = 1; i <= totalEpisodes; i++) {
+                const btn = document.createElement('button');
+                btn.id = `ep-btn-${i}`;
+                btn.className = 'px-3 py-1.5 bg-zinc-800 hover:bg-red-600 rounded text-sm font-medium transition text-zinc-300 hover:text-white';
+                btn.innerText = `Ep ${i}`;
+                btn.onclick = () => playEpisode(i);
+                episodeGrid.appendChild(btn);
+            }
+        }
+
+        function playEpisode(epNum) {
+            // Update button highlights
+            document.querySelectorAll('#episodeGrid button').forEach(b => {
+                b.classList.remove('bg-red-600', 'text-white');
+                b.classList.add('bg-zinc-800', 'text-zinc-300');
+            });
+            const activeBtn = document.getElementById(`ep-btn-${epNum}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-zinc-800', 'text-zinc-300');
+                activeBtn.classList.add('bg-red-600', 'text-white');
+            }
+
+            // Fixed MegaPlay stream URL endpoint
+            document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
         }
 
         function goBack() {
@@ -118,7 +166,6 @@
             document.getElementById('resultsGrid').classList.remove('hidden');
         }
 
-        // Allow pressing 'Enter' to search
         document.getElementById('searchInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 searchAnime();
