@@ -144,21 +144,21 @@
             }
         }
 
-        function playEpisode(epNum) {
-            // Update button highlights
-            document.querySelectorAll('#episodeGrid button').forEach(b => {
-                b.classList.remove('bg-red-600', 'text-white');
-                b.classList.add('bg-zinc-800', 'text-zinc-300');
-            });
-            const activeBtn = document.getElementById(`ep-btn-${epNum}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('bg-zinc-800', 'text-zinc-300');
-                activeBtn.classList.add('bg-red-600', 'text-white');
-            }
+      function playEpisode(epNum) {
+    // Update button highlights
+    document.querySelectorAll('#episodeGrid button').forEach(b => {
+        b.classList.remove('bg-red-600', 'text-white');
+        b.classList.add('bg-zinc-800', 'text-zinc-300');
+    });
+    const activeBtn = document.getElementById(`ep-btn-${epNum}`);
+    if (activeBtn) {
+        activeBtn.classList.remove('bg-zinc-800', 'text-zinc-300');
+        activeBtn.classList.add('bg-red-600', 'text-white');
+    }
 
-            // Fixed MegaPlay stream URL endpoint
-            document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
-        }
+    // Clean developer embed endpoint using the AniList ID directly
+    document.getElementById('videoPlayer').src = `https://player.vidplus.to/embed/anime/${currentAnimeId}/${epNum}?primarycolor=ef4444&autoplay=true`;
+}
 
         function goBack() {
             document.getElementById('videoPlayer').src = '';
