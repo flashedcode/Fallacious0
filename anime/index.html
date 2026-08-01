@@ -1,176 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AnimeStream</title>
-    <!-- Tailwind CSS for modern dark UI -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Break & Entertainment | Past Paper Genie</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-zinc-950 text-white min-h-screen font-sans">
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header / Navbar -->
-    <header class="border-b border-zinc-800 p-4 bg-zinc-900/50 sticky top-0 z-50 backdrop-blur">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <h1 class="text-xl font-bold tracking-wider text-red-500">ANIME<span class="text-white">STREAM</span></h1>
-            <!-- Search Bar -->
-            <div class="w-full sm:w-96 flex">
-                <input type="text" id="searchInput" placeholder="Search anime..." class="w-full bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-l-lg focus:outline-none focus:border-red-500 text-sm">
-                <button onclick="searchAnime()" class="bg-red-600 px-5 py-2 rounded-r-lg font-medium hover:bg-red-700 transition text-sm">Search</button>
-            </div>
-        </div>
-    </header>
+    <!-- Main Navigation Bar matching Past Paper Genie layout -->
+    <header class="border-b border-slate-800 bg-slate-950/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Branding & Logo -->
+            <div class="flex items-center gap-6">
+                <a href="/" class="flex items-center gap-2.5 font-bold text-lg text-white tracking-tight">
+                    <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-extrabold shadow-lg shadow-indigo-500/20">
+                        PPG
+                    </div>
+                    <span>Past Paper Genie</span>
+                </a>
+                
+                <!-- Main Site Nav Links (Change these paths to match your site's pages) -->
+                <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-slate-400">
+                    <a href="/" class="px-3 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Home</a>
+                    <a href="/subjects" class="px-3 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Subjects</a>
+                    <a href="/papers" class="px-3 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Past Papers</a>
+                    <a href="/anime/" class="px-3 py-2 rounded-lg text-white bg-slate-800 transition">Study Break</a>
+                </nav>
+            </div>
 
-    <!-- Main Content Area -->
-    <main class="max-w-6xl mx-auto p-4 sm:p-6">
-        <!-- Video Player View (Hidden by default) -->
-        <div id="playerView" class="hidden mb-8">
-            <button onclick="goBack()" class="mb-4 text-sm bg-zinc-800 px-4 py-2 rounded-lg hover:bg-zinc-700 transition">&larr; Back to Search</button>
-            
-            <div class="aspect-video w-full bg-black rounded-xl overflow-hidden shadow-2xl border border-zinc-800 mb-6">
-                <iframe id="videoPlayer" src="" class="w-full h-full" allowfullscreen></iframe>
-            </div>
-            
-            <h2 id="watchTitle" class="text-2xl font-bold mb-4"></h2>
-            
-            <!-- Episode Selector Grid -->
-            <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-                <h3 class="text-sm font-semibold text-zinc-400 mb-3 uppercase tracking-wider">Select Episode</h3>
-                <div id="episodeGrid" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-2">
-                    <!-- Dynamic episode buttons injected here -->
-                </div>
-            </div>
-        </div>
+            <!-- Quick Search Bar in Header -->
+            <div class="hidden sm:flex items-center w-72">
+                <div class="relative w-full">
+                    <input type="text" id="searchInput" placeholder="Search shows or anime..." class="w-full bg-slate-900 border border-slate-700/80 px-4 py-1.5 rounded-lg focus:outline-none focus:border-indigo-500 text-sm text-slate-200 placeholder-slate-500 transition">
+                </div>
+                <button onclick="searchAnime()" class="ml-2 bg-indigo-600 px-4 py-1.5 rounded-lg font-medium hover:bg-indigo-500 transition text-sm text-white shadow-sm">Search</button>
+            </div>
+        </div>
+    </header>
 
-        <!-- Search Results Grid -->
-        <div id="resultsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <p class="text-zinc-500 col-span-full text-center py-12">Search for an anime above to start watching.</p>
-        </div>
-    </main>
+    <!-- Mobile Search Bar Sub-row -->
+    <div class="sm:hidden bg-slate-950 p-3 border-b border-slate-800 flex gap-2">
+        <input type="text" id="searchInputMobile" placeholder="Search shows or anime..." class="w-full bg-slate-900 border border-slate-700 px-3 py-2 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+        <button onclick="document.getElementById('searchInput').value = document.getElementById('searchInputMobile').value; searchAnime();" class="bg-indigo-600 px-4 py-2 rounded-lg text-sm font-medium text-white">Go</button>
+    </div>
 
-    <!-- JavaScript Logic -->
-    <script>
-        let currentAnimeId = null;
-        let currentAnimeTitle = '';
-        let totalEpisodes = 12;
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Breadcrumb / Page Title Banner -->
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-slate-800/40 border border-slate-800 p-6 rounded-2xl">
+            <div>
+                <span class="text-xs font-semibold text-indigo-400 uppercase tracking-widest bg-indigo-500/10 px-2.5 py-1 rounded-md">Student Zone</span>
+                <h1 class="text-2xl font-bold text-white mt-2">Study Break Hub</h1>
+                <p class="text-slate-400 text-sm mt-1">Take a well-deserved breather between revision sessions. Stream your favorite series safely.</p>
+            </div>
+        </div>
 
-        async function searchAnime() {
-            const query = document.getElementById('searchInput').value.trim();
-            if (!query) return;
+        <!-- Video Player View (Hidden by default) -->
+        <div id="playerView" class="hidden mb-8 animate-fadeIn">
+            <button onclick="goBack()" class="mb-4 text-sm bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl hover:bg-slate-700 transition text-slate-200 flex items-center gap-2 font-medium shadow-sm">
+                &larr; Back to Library
+            </button>
+            
+            <div class="aspect-video w-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 mb-6 relative">
+                <iframe id="videoPlayer" src="" class="w-full h-full" allowfullscreen></iframe>
+            </div>
+            
+            <h2 id="watchTitle" class="text-2xl font-bold mb-4 text-white"></h2>
+            
+            <!-- Episode Selector Grid -->
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 shadow-inner">
+                <h3 class="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">Select Episode</h3>
+                <div id="episodeGrid" class="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-2">
+                    <!-- Dynamic episode buttons injected here -->
+                </div>
+            </div>
+        </div>
 
-            const grid = document.getElementById('resultsGrid');
-            grid.innerHTML = '<p class="text-zinc-400 col-span-full text-center py-12">Searching...</p>';
+        <!-- Search Results Grid -->
+        <div id="resultsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+            <div class="col-span-full text-center py-20 bg-slate-950/40 border border-slate-800/60 rounded-2xl p-8">
+                <div class="w-12 h-12 rounded-full bg-indigo-600/10 text-indigo-400 flex items-center justify-center mx-auto mb-3 text-xl font-bold">🍿</div>
+                <h3 class="text-base font-semibold text-slate-300 mb-1">Ready for a break?</h3>
+                <p class="text-slate-500 text-sm max-w-sm mx-auto">Use the search bar above to look up any series or anime you want to watch.</p>
+            </div>
+        </div>
+    </main>
 
-            const graphqlQuery = `
-                query ($search: String) {
-                    Page (perPage: 15) {
-                        media (search: $search, type: ANIME) {
-                            id
-                            title {
-                                romaji
-                                english
-                            }
-                            coverImage {
-                                large
-                            }
-                            episodes
-                        }
-                    }
-                }
-            `;
+    <!-- JavaScript Logic -->
+    <script>
+        let currentAnimeId = null;
+        let currentAnimeTitle = '';
+        let totalEpisodes = 12;
 
-            try {
-                const response = await fetch('https://graphql.anilist.co', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: graphqlQuery, variables: { search: query } })
-                });
+        async function searchAnime() {
+            // Sync desktop and mobile search inputs
+            const desktopInput = document.getElementById('searchInput').value.trim();
+            const mobileInput = document.getElementById('searchInputMobile').value.trim();
+            const query = desktopInput || mobileInput;
+            
+            if (!query) return;
 
-                const data = await response.json();
-                const animeList = data.data.Page.media;
+            // Update both inputs so they match
+            document.getElementById('searchInput').value = query;
+            document.getElementById('searchInputMobile').value = query;
 
-                grid.innerHTML = '';
-                if (animeList.length === 0) {
-                    grid.innerHTML = '<p class="text-zinc-500 col-span-full text-center py-12">No anime found.</p>';
-                    return;
-                }
+            const grid = document.getElementById('resultsGrid');
+            grid.innerHTML = '<p class="text-slate-400 col-span-full text-center py-16">Searching database...</p>';
 
-                animeList.forEach(anime => {
-                    const title = anime.title.english || anime.title.romaji;
-                    const card = document.createElement('div');
-                    card.className = 'bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden group cursor-pointer hover:border-red-500 transition';
-                    card.onclick = () => selectAnime(anime.id, title, anime.episodes);
+            const graphqlQuery = `
+                query ($search: String) {
+                    Page (perPage: 15) {
+                        media (search: $search, type: ANIME) {
+                            id
+                            title {
+                                romaji
+                                english
+                            }
+                            coverImage {
+                                large
+                            }
+                            episodes
+                        }
+                    }
+                }
+            `;
 
-                    card.innerHTML = `
-                        <div class="aspect-[3/4] overflow-hidden bg-zinc-800">
-                            <img src="${anime.coverImage.large}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                        </div>
-                        <div class="p-3">
-                            <h3 class="font-medium text-sm truncate">${title}</h3>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-            } catch (err) {
-                grid.innerHTML = '<p class="text-red-500 col-span-full text-center py-12">Failed to fetch search results.</p>';
-            }
-        }
+            try {
+                const response = await fetch('https://graphql.anilist.co', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: graphqlQuery, variables: { search: query } })
+                });
 
-        function selectAnime(id, title, eps) {
-            currentAnimeId = id;
-            currentAnimeTitle = title;
-            totalEpisodes = eps || 12; // Fallback if episode count is missing
+                const data = await response.json();
+                const animeList = data.data.Page.media;
 
-            document.getElementById('resultsGrid').classList.add('hidden');
-            document.getElementById('playerView').classList.remove('hidden');
-            document.getElementById('watchTitle').innerText = title;
+                grid.innerHTML = '';
+                if (animeList.length === 0) {
+                    grid.innerHTML = '<p class="text-slate-500 col-span-full text-center py-16">No series found matching your search.</p>';
+                    return;
+                }
 
-            buildEpisodeList();
-            playEpisode(1); // Default to Episode 1
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+                animeList.forEach(anime => {
+                    const title = anime.title.english || anime.title.romaji;
+                    const card = document.createElement('div');
+                    card.className = 'bg-slate-950 border border-slate-800 rounded-xl overflow-hidden group cursor-pointer hover:border-indigo-500 transition shadow-sm flex flex-col';
+                    card.onclick = () => selectAnime(anime.id, title, anime.episodes);
 
-        function buildEpisodeList() {
-            const episodeGrid = document.getElementById('episodeGrid');
-            episodeGrid.innerHTML = '';
+                    card.innerHTML = `
+                        <div class="aspect-[3/4] overflow-hidden bg-slate-900 relative">
+                            <img src="${anime.coverImage.large}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="p-3.5 flex-1 flex items-center">
+                            <h3 class="font-medium text-sm truncate text-slate-200 group-hover:text-indigo-400 transition">${title}</h3>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (err) {
+                grid.innerHTML = '<p class="text-red-400 col-span-full text-center py-16">Failed to connect to the metadata server.</p>';
+            }
+        }
 
-            for (let i = 1; i <= totalEpisodes; i++) {
-                const btn = document.createElement('button');
-                btn.id = `ep-btn-${i}`;
-                btn.className = 'px-3 py-1.5 bg-zinc-800 hover:bg-red-600 rounded text-sm font-medium transition text-zinc-300 hover:text-white';
-                btn.innerText = `Ep ${i}`;
-                btn.onclick = () => playEpisode(i);
-                episodeGrid.appendChild(btn);
-            }
-        }
+        function selectAnime(id, title, eps) {
+            currentAnimeId = id;
+            currentAnimeTitle = title;
+            totalEpisodes = eps || 12;
 
-      function playEpisode(epNum) {
-    // Update button highlights
-    document.querySelectorAll('#episodeGrid button').forEach(b => {
-        b.classList.remove('bg-red-600', 'text-white');
-        b.classList.add('bg-zinc-800', 'text-zinc-300');
-    });
-    const activeBtn = document.getElementById(`ep-btn-${epNum}`);
-    if (activeBtn) {
-        activeBtn.classList.remove('bg-zinc-800', 'text-zinc-300');
-        activeBtn.classList.add('bg-red-600', 'text-white');
-    }
+            document.getElementById('resultsGrid').classList.add('hidden');
+            document.getElementById('playerView').classList.remove('hidden');
+            document.getElementById('watchTitle').innerText = title;
 
-    // Clean developer embed endpoint using the AniList ID directly
-    document.getElementById('videoPlayer').src = `https://player.vidplus.to/embed/anime/${currentAnimeId}/${epNum}?primarycolor=ef4444&autoplay=true`;
-}
+            buildEpisodeList();
+            playEpisode(1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-        function goBack() {
-            document.getElementById('videoPlayer').src = '';
-            document.getElementById('playerView').classList.add('hidden');
-            document.getElementById('resultsGrid').classList.remove('hidden');
-        }
+        function buildEpisodeList() {
+            const episodeGrid = document.getElementById('episodeGrid');
+            episodeGrid.innerHTML = '';
 
-        document.getElementById('searchInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                searchAnime();
-            }
-        });
-    </script>
+            for (let i = 1; i <= totalEpisodes; i++) {
+                const btn = document.createElement('button');
+                btn.id = `ep-btn-${i}`;
+                btn.className = 'px-3 py-1.5 bg-slate-900 hover:bg-indigo-600 rounded-lg text-sm font-medium transition text-slate-300 hover:text-white border border-slate-800';
+                btn.innerText = `Ep ${i}`;
+                btn.onclick = () => playEpisode(i);
+                episodeGrid.appendChild(btn);
+            }
+        }
+
+function playEpisode(epNum) {
+            // Update button highlights
+            document.querySelectorAll('#episodeGrid button').forEach(b => {
+                b.classList.remove('bg-red-600', 'text-white');
+                b.classList.add('bg-zinc-800', 'text-zinc-300');
+            });
+            const activeBtn = document.getElementById(`ep-btn-${epNum}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-zinc-800', 'text-zinc-300');
+                activeBtn.classList.add('bg-red-600', 'text-white');
+            }
+
+            // Fixed MegaPlay stream URL endpoint
+            document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
+        }
+
+            // Using MegaPlay endpoint since it works reliably for your stream loading
+            document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
+        }
+
+        function goBack() {
+            document.getElementById('videoPlayer').src = '';
+            document.getElementById('playerView').classList.add('hidden');
+            document.getElementById('resultsGrid').classList.remove('hidden');
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                searchAnime();
+            }
+        });
+        document.getElementById('searchInputMobile').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchInput').value = document.getElementById('searchInputMobile').value;
+                searchAnime();
+            }
+        });
+    </script>
 </body>
 </html>
