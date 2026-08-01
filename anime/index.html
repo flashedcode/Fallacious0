@@ -156,8 +156,8 @@
                 activeBtn.classList.add('bg-red-600', 'text-white');
             }
 
-            // Fixed MegaPlay stream URL endpoint
-            document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
+            // Fixed VidLink stream URL endpoint supporting AniList IDs natively
+            document.getElementById('videoPlayer').src = `https://vidlink.pro/anime/${currentAnimeId}/${epNum}`;
         }
 
         function goBack() {
