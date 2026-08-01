@@ -134,7 +134,7 @@
 
     <!-- Video Player View (Hidden by default) -->
     <div id="playerView" style="display:none;margin-bottom:40px;">
-        <button onclick="goBack()" class="play-btn" style="margin-bottom:20px;">&larr; BACK TO SEARCH</button>
+        <button onclick="goBack()" class="play-btn" style="margin-bottom:20px;">&larr; BACK TO FEED</button>
         
         <!-- Video Container -->
         <div style="aspect-ratio:16/9;width:100%;background:#000;border-radius:10px;overflow:hidden;box-shadow:0 15px 50px rgba(0,229,255,0.15);border:1px solid rgba(0,229,255,0.25);margin-bottom:24px;">
@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    <!-- Search Results Grid -->
+    <!-- Dynamic Titles / Search Results Grid -->
     <div id="resultsGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:20px;">
         <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--dim);">
             <p style="font-family:var(--f3);font-size:11px;letter-spacing:2px;">Type an anime name above to begin streaming.</p>
@@ -208,9 +208,51 @@
     let currentAnimeTitle = '';
     let totalEpisodes = 12;
 
+    // Recommended Anime IDs (JJK Culling Game/S3, JJK S2, Naruto Shippuden, Bleach, One Piece, Demon Slayer)
+    const recommendedIds = [174154, 145064, 40748, 1735, 269, 21, 101922, 11061, 16498];
+
+    // Load Recommended Feed on startup
+    async function loadRecommended() {
+        const grid = document.getElementById('resultsGrid');
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c1);">Loading recommended hits...</div>';
+
+        const graphqlQuery = `
+            query ($idIn: [Int]) {
+                Page (perPage: 12) {
+                    media (id_in: $idIn, type: ANIME, sort: POPULARITY_DESC) {
+                        id
+                        title { romaji english }
+                        coverImage { large }
+                        episodes
+                    }
+                }
+            }
+        `;
+
+        try {
+            const response = await fetch('https://graphql.anilist.co', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: graphqlQuery, variables: { idIn: recommendedIds } })
+            });
+            const data = await response.json();
+            const animeList = data.data.Page.media;
+
+            // Render Recommended Label
+            grid.innerHTML = '<div style="grid-column:1/-1;margin-bottom:5px;display:flex;align-items:center;gap:15px;"><div style="height:1px;background:linear-gradient(90deg,var(--c1),transparent);flex:1;"></div><div style="font-family:var(--f3);font-size:12px;letter-spacing:4px;color:var(--c1);text-transform:uppercase;">Trending Hits</div><div style="height:1px;background:linear-gradient(270deg,var(--c1),transparent);flex:1;"></div></div>';
+
+            renderCards(animeList, grid);
+        } catch (err) {
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--dim);">Type an anime name above to begin streaming.</div>';
+        }
+    }
+
     async function searchAnime() {
         const query = document.getElementById('searchInput').value.trim();
-        if (!query) return;
+        if (!query) {
+            loadRecommended(); // If search is empty, bring back recommended
+            return;
+        }
 
         const grid = document.getElementById('resultsGrid');
         grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c1);">Searching database...</div>';
@@ -220,13 +262,8 @@
                 Page (perPage: 20) {
                     media (search: $search, type: ANIME) {
                         id
-                        title {
-                            romaji
-                            english
-                        }
-                        coverImage {
-                            large
-                        }
+                        title { romaji english }
+                        coverImage { large }
                         episodes
                     }
                 }
@@ -249,33 +286,38 @@
                 return;
             }
 
-            animeList.forEach(anime => {
-                const title = anime.title.english || anime.title.romaji;
-                const eps = anime.episodes || '?';
-                const card = document.createElement('div');
-                card.className = 'game-card';
-                card.style.cursor = 'pointer';
-                card.onclick = () => selectAnime(anime.id, title, anime.episodes);
-
-                card.innerHTML = `
-                    <div style="aspect-ratio:3/4;overflow:hidden;background:#07071a;border-radius:6px;margin-bottom:14px;position:relative;">
-                        <img src="${anime.coverImage.large}" alt="${title}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
-                        <span style="position:absolute;bottom:8px;right:8px;background:rgba(4,4,14,0.85);font-family:var(--f3);font-size:9px;padding:3px 6px;border-radius:4px;color:var(--c1);border:1px solid rgba(0,229,255,0.2);">${eps} EPS</span>
-                    </div>
-                    <div style="font-family:var(--f3);font-size:9px;letter-spacing:2px;color:var(--c1);margin-bottom:6px;">ANIME</div>
-                    <h3 style="font-family:var(--f1);font-size:13px;font-weight:700;color:#e4e8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</h3>
-                `;
-                grid.appendChild(card);
-            });
+            renderCards(animeList, grid);
         } catch (err) {
             grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c3);">Failed to fetch search results. Check your connection.</div>';
         }
     }
 
+    // Helper to render anime cards
+    function renderCards(animeList, grid) {
+        animeList.forEach(anime => {
+            const title = anime.title.english || anime.title.romaji;
+            const eps = anime.episodes || '?';
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            card.style.cursor = 'pointer';
+            card.onclick = () => selectAnime(anime.id, title, anime.episodes);
+
+            card.innerHTML = `
+                <div style="aspect-ratio:3/4;overflow:hidden;background:#07071a;border-radius:6px;margin-bottom:14px;position:relative;">
+                    <img src="${anime.coverImage.large}" alt="${title}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
+                    <span style="position:absolute;bottom:8px;right:8px;background:rgba(4,4,14,0.85);font-family:var(--f3);font-size:9px;padding:3px 6px;border-radius:4px;color:var(--c1);border:1px solid rgba(0,229,255,0.2);">${eps} EPS</span>
+                </div>
+                <div style="font-family:var(--f3);font-size:9px;letter-spacing:2px;color:var(--c1);margin-bottom:6px;">ANIME</div>
+                <h3 style="font-family:var(--f1);font-size:13px;font-weight:700;color:#e4e8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</h3>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
     function selectAnime(id, title, eps) {
         currentAnimeId = id;
         currentAnimeTitle = title;
-        totalEpisodes = eps || 12;
+        totalEpisodes = eps || 12; // fallback if unknown
 
         document.getElementById('resultsGrid').style.display = 'none';
         document.getElementById('playerView').style.display = 'block';
@@ -290,7 +332,7 @@
     function buildEpisodeList() {
         const episodeGrid = document.getElementById('episodeGrid');
         episodeGrid.innerHTML = '';
-        const limit = Math.min(totalEpisodes, 500);
+        const limit = Math.min(totalEpisodes, 1500); // safety limit
 
         for (let i = 1; i <= limit; i++) {
             const btn = document.createElement('button');
@@ -304,37 +346,46 @@
         }
     }
 
-function playEpisode(epNum) {
-            // Update button highlights
-            document.querySelectorAll('#episodeGrid button').forEach(b => {
-                b.classList.remove('bg-red-600', 'text-white');
-                b.classList.add('bg-zinc-800', 'text-zinc-300');
-            });
-            const activeBtn = document.getElementById(`ep-btn-${epNum}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('bg-zinc-800', 'text-zinc-300');
-                activeBtn.classList.add('bg-red-600', 'text-white');
-            }
-
-            // Fixed MegaPlay stream URL endpoint
-            document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
+    function playEpisode(epNum) {
+        // Clear previous active styles using the site's native neon theme variables
+        document.querySelectorAll('#episodeGrid button').forEach(b => {
+            b.style.borderColor = 'rgba(0,229,255,0.3)';
+            b.style.color = 'var(--c1)';
+            b.style.background = 'transparent';
+        });
+        
+        // Highlight active episode button
+        const activeBtn = document.getElementById(`ep-btn-${epNum}`);
+        if (activeBtn) {
+            activeBtn.style.borderColor = 'var(--c1)';
+            activeBtn.style.color = '#fff';
+            activeBtn.style.background = 'rgba(0,229,255,0.15)';
         }
 
-            // Using MegaPlay endpoint since it works reliably for your stream loading
-            document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
-        }
+        // Set Stream Source
+        document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
+    }
 
     function goBack() {
         document.getElementById('videoPlayer').src = '';
         document.getElementById('playerView').style.display = 'none';
         document.getElementById('resultsGrid').style.display = 'grid';
+        
+        // If the search input is empty, reload recommended
+        if(!document.getElementById('searchInput').value.trim()) {
+             loadRecommended();
+        }
     }
 
+    // Trigger search on Enter key
     document.getElementById('searchInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             searchAnime();
         }
     });
+
+    // Run on init
+    document.addEventListener('DOMContentLoaded', loadRecommended);
 </script>
 </body>
 </html>
