@@ -603,15 +603,16 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  // Your Firebase configuration (using: pastpapergenie-auth)
-  const firebaseConfig = {
-    apiKey: "YOUR_FIREBASE_API_KEY", // Replace with your Web API Key from Firebase Console Settings
-    authDomain: "pastpapergenie-auth.firebaseapp.com",
-    projectId: "pastpapergenie-auth",
-    storageBucket: "pastpapergenie-auth.appspot.com",
-    messagingSenderId: "670440449105",
-    appId: "YOUR_FIREBASE_APP_ID" // Replace with your Web App ID from Firebase Console Settings
-  };
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDZ_wsa8mBunnpjefqPWrObMoWsel2TUH4",
+  authDomain: "pastpapergenie-auth.firebaseapp.com",
+  projectId: "pastpapergenie-auth",
+  storageBucket: "pastpapergenie-auth.firebasestorage.app",
+  messagingSenderId: "670440449105",
+  appId: "1:670440449105:web:e98ce9eb790bca2409c470",
+  measurementId: "G-4SP4GQFGPW"
+};
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
