@@ -168,6 +168,7 @@
 </div>
 
 <!-- NAV -->
+<!-- NAV -->
 <nav style="position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(4,4,14,0.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(0,229,255,0.07);animation:borderGlow 4s ease-in-out infinite;">
   <a href="/" style="font-family:var(--f4);font-size:17px;font-weight:700;letter-spacing:1px;color:#fff;text-shadow:0 0 18px rgba(0,229,255,0.45);">PASTPAPER<span style="color:var(--c1);text-shadow:0 0 14px var(--c1);">GENIE</span></a>
   <div class="nav-desktop" style="display:flex;gap:34px;align-items:center;">
@@ -177,13 +178,23 @@
     <a href="/articles/" class="nav-link">ARTICLES</a>
     <a href="/updates/" class="nav-link">UPDATES</a>
   </div>
-  <a href="/select/" class="nav-desktop" style="font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(0,229,255,0.35);color:var(--c1);border-radius:4px;transition:all 0.3s;" onmouseenter="this.style.background='rgba(0,229,255,0.1)';this.style.boxShadow='0 0 16px rgba(0,229,255,0.25)'" onmouseleave="this.style.background='transparent';this.style.boxShadow='none'">▶ PLAY NOW</a>
+  
+  <!-- AUTHENTICATION UI CONTAINER -->
+  <div style="display:flex;gap:12px;align-items:center;">
+    <a href="/select/" class="nav-desktop" style="font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(0,229,255,0.35);color:var(--c1);border-radius:4px;transition:all 0.3s;" onmouseenter="this.style.background='rgba(0,229,255,0.1)';this.style.boxShadow='0 0 16px rgba(0,229,255,0.25)'" onmouseleave="this.style.background='transparent';this.style.boxShadow='none'">▶ PLAY NOW</a>
+    
+    <button id="loginBtn" class="nav-desktop" style="font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(0,229,255,0.35);color:var(--c1);background:transparent;border-radius:4px;transition:all 0.3s;cursor:pointer;" onmouseenter="this.style.background='rgba(0,229,255,0.1)';" onmouseleave="this.style.background='transparent'">LOGIN</button>
+    <span id="userProfile" style="display:none;font-family:var(--f3);font-size:10px;color:var(--c4);letter-spacing:1px;text-shadow:0 0 10px rgba(0,255,157,0.45);"></span>
+    <button id="logoutBtn" style="display:none;font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(255,24,112,0.35);color:var(--c3);background:transparent;border-radius:4px;transition:all 0.3s;cursor:pointer;" onmouseenter="this.style.background='rgba(255,24,112,0.1)';" onmouseleave="this.style.background='transparent'">LOGOUT</button>
+  </div>
+
   <div id="ham" style="display:none;flex-direction:column;gap:5px;padding:6px;z-index:9100;cursor:pointer;" onclick="toggleMenu()">
     <span style="width:22px;height:2px;background:var(--c1);display:block;transition:all 0.3s;"></span>
     <span style="width:22px;height:2px;background:var(--c1);display:block;transition:all 0.3s;"></span>
     <span style="width:22px;height:2px;background:var(--c1);display:block;transition:all 0.3s;"></span>
   </div>
 </nav>
+
 
 <!-- MAIN CONTENT -->
 <main style="position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:110px 5% 80px;">
