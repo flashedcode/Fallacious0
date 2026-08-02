@@ -39,7 +39,7 @@
 <meta name="twitter:description" content="Explore top anime recommendations and reviews, or take a break with 730+ free unblocked browser games. No downloads, pure entertainment.">
 <meta name="twitter:image" content="https://pastpapergenie.co.uk/preview-image.jpg">
 
-<!-- Schema.org JSON-LD (FAQ for Both Topics) -->
+<!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -73,24 +73,6 @@
 }
 </script>
 
-<!-- Twitter Cards -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://pastpapergenie.co.uk/">
-<meta name="twitter:title" content="PastPaperGenie | Free Past Papers, Essays & Unblocked Games">
-<meta name="twitter:description" content="Your ultimate study and gaming hub. Get free past papers and essays for revision, then take a break with 730+ instant unblocked games like Minecraft and horror classics. No downloads required.">
-<meta name="twitter:image" content="https://pastpapergenie.co.uk/preview-image.jpg">
-
-<!-- Schema.org JSON-LD -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "PastPaperGenie",
-  "alternateName": "Past Paper Genie Study & Games Hub",
-  "url": "https://pastpapergenie.co.uk/",
-  "description": "Your ultimate destination for exam revision and unblocked games. Access free past papers, essay samples, and study notes, then play Minecraft, horror games, and classic shooters instantly."
-}
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -177,7 +159,16 @@
     <a href="/articles/" class="nav-link">ARTICLES</a>
     <a href="/updates/" class="nav-link">UPDATES</a>
   </div>
-  <a href="/select/" class="nav-desktop" style="font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(0,229,255,0.35);color:var(--c1);border-radius:4px;transition:all 0.3s;" onmouseenter="this.style.background='rgba(0,229,255,0.1)';this.style.boxShadow='0 0 16px rgba(0,229,255,0.25)'" onmouseleave="this.style.background='transparent';this.style.boxShadow='none'">▶ PLAY NOW</a>
+  
+  <!-- AUTHENTICATION UI CONTAINER -->
+  <div style="display:flex;gap:12px;align-items:center;">
+    <a href="/select/" class="nav-desktop" style="font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(0,229,255,0.35);color:var(--c1);border-radius:4px;transition:all 0.3s;" onmouseenter="this.style.background='rgba(0,229,255,0.1)';this.style.boxShadow='0 0 16px rgba(0,229,255,0.25)'" onmouseleave="this.style.background='transparent';this.style.boxShadow='none'">▶ PLAY NOW</a>
+    
+    <button id="loginBtn" class="nav-desktop" style="font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(0,229,255,0.35);color:var(--c1);background:transparent;border-radius:4px;transition:all 0.3s;cursor:pointer;" onmouseenter="this.style.background='rgba(0,229,255,0.1)';" onmouseleave="this.style.background='transparent'">LOGIN</button>
+    <span id="userProfile" style="display:none;font-family:var(--f3);font-size:10px;color:var(--c4);letter-spacing:1px;text-shadow:0 0 10px rgba(0,255,157,0.45);"></span>
+    <button id="logoutBtn" style="display:none;font-family:var(--f1);font-size:9px;font-weight:700;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(255,24,112,0.35);color:var(--c3);background:transparent;border-radius:4px;transition:all 0.3s;cursor:pointer;" onmouseenter="this.style.background='rgba(255,24,112,0.1)';" onmouseleave="this.style.background='transparent'">LOGOUT</button>
+  </div>
+
   <div id="ham" style="display:none;flex-direction:column;gap:5px;padding:6px;z-index:9100;cursor:pointer;" onclick="toggleMenu()">
     <span style="width:22px;height:2px;background:var(--c1);display:block;transition:all 0.3s;"></span>
     <span style="width:22px;height:2px;background:var(--c1);display:block;transition:all 0.3s;"></span>
@@ -202,14 +193,7 @@
     </div>
   <section>
 <div style="text-align: center; margin: 10px auto;">
-
-  
       <script>
-
-
-
-
-        
   atOptions = {
     'key' : '1c9c7e8731e03289785bbb90b205f29f',
     'format' : 'iframe',
@@ -218,15 +202,10 @@
     'params' : {}
   };
    </script>
-
-  
-
-
-    
 <script src="https://www.highperformanceformat.com/1c9c7e8731e03289785bbb90b205f29f/invoke.js"></script>
-
 </div>
     </section>
+    
     <!-- Video Player View (Hidden by default) -->
     <div id="playerView" style="display:none;margin-bottom:40px;">
         <button onclick="goBack()" class="play-btn" style="margin-bottom:20px;">&larr; BACK TO FEED</button>
@@ -256,18 +235,11 @@
             <p style="font-family:var(--f3);font-size:11px;letter-spacing:2px;">Type an anime name above to begin streaming one of our 1000+ anime collection.</p>
         </div>
     </div>
-
 </main>
+  
   <section>
 <div style="text-align: center; margin: 10px auto;">
-
-  
       <script>
-
-
-
-
-        
   atOptions = {
     'key' : '1c9c7e8731e03289785bbb90b205f29f',
     'format' : 'iframe',
@@ -276,24 +248,12 @@
     'params' : {}
   };
    </script>
-
-  
-
-
-    
 <script src="https://www.highperformanceformat.com/1c9c7e8731e03289785bbb90b205f29f/invoke.js"></script>
-
 </div>
-    </section>  <section>
+    </section>  
+    <section>
 <div style="text-align: center; margin: 10px auto;">
-
-  
       <script>
-
-
-
-
-        
   atOptions = {
     'key' : '1c9c7e8731e03289785bbb90b205f29f',
     'format' : 'iframe',
@@ -302,24 +262,12 @@
     'params' : {}
   };
    </script>
-
-  
-
-
-    
 <script src="https://www.highperformanceformat.com/1c9c7e8731e03289785bbb90b205f29f/invoke.js"></script>
-
 </div>
-    </section>  <section>
+    </section>  
+    <section>
 <div style="text-align: center; margin: 10px auto;">
-
-  
       <script>
-
-
-
-
-        
   atOptions = {
     'key' : '1c9c7e8731e03289785bbb90b205f29f',
     'format' : 'iframe',
@@ -328,15 +276,10 @@
     'params' : {}
   };
    </script>
-
-  
-
-
-    
 <script src="https://www.highperformanceformat.com/1c9c7e8731e03289785bbb90b205f29f/invoke.js"></script>
-
 </div>
     </section>
+
 <!-- FOOTER -->
 <footer style="padding:44px 5% 28px;border-top:1px solid rgba(0,229,255,0.07);background:rgba(0,0,0,0.25);position:relative;z-index:2;">
     <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;">
@@ -352,7 +295,7 @@
     </div>
 </footer>
 
-<!-- JavaScript Logic & UI Handlers -->
+<!-- MAIN SCRIPT (Your existing logic + completed playEpisode) -->
 <script>
     // Custom Cursor Logic
     const dot=document.getElementById('cdot'),ring=document.getElementById('cring');
@@ -381,12 +324,17 @@
     let currentAnimeTitle = '';
     let totalEpisodes = 12;
 
-    // Recommended Anime IDs (JJK Culling Game/S3, JJK S2, Naruto Shippuden, Bleach, One Piece, Demon Slayer)
+    // Recommended Anime IDs
     const recommendedIds = [174154, 145064, 40748, 1735, 269, 21, 101922, 11061, 16498];
 
     // Load Recommended Feed on startup
     async function loadRecommended() {
         const grid = document.getElementById('resultsGrid');
+        if(!grid) return;
+        
+        // Save any existing continue watching banner before clearing
+        const banner = document.getElementById('continueWatchingBanner');
+        
         grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c1);">Loading recommended hits...</div>';
 
         const graphqlQuery = `
@@ -411,23 +359,28 @@
             const data = await response.json();
             const animeList = data.data.Page.media;
 
-            // Render Recommended Label
             grid.innerHTML = '<div style="grid-column:1/-1;margin-bottom:5px;display:flex;align-items:center;gap:15px;"><div style="height:1px;background:linear-gradient(90deg,var(--c1),transparent);flex:1;"></div><div style="font-family:var(--f3);font-size:12px;letter-spacing:4px;color:var(--c1);text-transform:uppercase;">Trending Hits</div><div style="height:1px;background:linear-gradient(270deg,var(--c1),transparent);flex:1;"></div></div>';
+
+            // Put the banner back if it existed
+            if(banner) grid.prepend(banner);
 
             renderCards(animeList, grid);
         } catch (err) {
             grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--dim);">Type an anime name above to begin streaming.</div>';
+            if(banner) grid.prepend(banner);
         }
     }
 
     async function searchAnime() {
         const query = document.getElementById('searchInput').value.trim();
         if (!query) {
-            loadRecommended(); // If search is empty, bring back recommended
+            loadRecommended();
             return;
         }
 
         const grid = document.getElementById('resultsGrid');
+        const banner = document.getElementById('continueWatchingBanner');
+        
         grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c1);">Searching database...</div>';
 
         const graphqlQuery = `
@@ -454,18 +407,20 @@
             const animeList = data.data.Page.media;
 
             grid.innerHTML = '';
+            if(banner) grid.prepend(banner);
+            
             if (animeList.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--dim);">No anime found matching your search.</div>';
+                grid.innerHTML += '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--dim);">No anime found matching your search.</div>';
                 return;
             }
 
             renderCards(animeList, grid);
         } catch (err) {
             grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c3);">Failed to fetch search results. Check your connection.</div>';
+            if(banner) grid.prepend(banner);
         }
     }
 
-    // Helper to render anime cards
     function renderCards(animeList, grid) {
         animeList.forEach(anime => {
             const title = anime.title.english || anime.title.romaji;
@@ -487,10 +442,11 @@
         });
     }
 
-    function selectAnime(id, title, eps) {
+    // Make selectAnime available globally so the Firebase script can click it
+    window.selectAnime = function(id, title, eps) {
         currentAnimeId = id;
         currentAnimeTitle = title;
-        totalEpisodes = eps || 12; // fallback if unknown
+        totalEpisodes = eps || 12;
 
         document.getElementById('resultsGrid').style.display = 'none';
         document.getElementById('playerView').style.display = 'block';
@@ -505,7 +461,7 @@
     function buildEpisodeList() {
         const episodeGrid = document.getElementById('episodeGrid');
         episodeGrid.innerHTML = '';
-        const limit = Math.min(totalEpisodes, 1500); // safety limit
+        const limit = Math.min(totalEpisodes, 1500);
 
         for (let i = 1; i <= limit; i++) {
             const btn = document.createElement('button');
@@ -519,49 +475,169 @@
         }
     }
 
+    // THE FIXED PLAY EPISODE FUNCTION
     function playEpisode(epNum) {
         // Clear previous active styles using the site's native neon theme variables
         document.querySelectorAll('#episodeGrid button').forEach(b => {
-            b.style.borderColor = 'rgba(0,229,255,0.3)';
-            b.style.color = 'var(--c1)';
             b.style.background = 'transparent';
+            b.style.color = 'var(--c1)';
+            b.style.borderColor = 'rgba(0,229,255,0.3)';
         });
-        
-        // Highlight active episode button
+
+        // Highlight active episode
         const activeBtn = document.getElementById(`ep-btn-${epNum}`);
-        if (activeBtn) {
-            activeBtn.style.borderColor = 'var(--c1)';
+        if(activeBtn) {
+            activeBtn.style.background = 'rgba(0,229,255,0.1)';
             activeBtn.style.color = '#fff';
-            activeBtn.style.background = 'rgba(0,229,255,0.15)';
+            activeBtn.style.borderColor = 'var(--c1)';
         }
 
         // Set Stream Source
         document.getElementById('videoPlayer').src = `https://megaplay.buzz/stream/ani/${currentAnimeId}/${epNum}/sub`;
-    }
 
-    function goBack() {
-        document.getElementById('videoPlayer').src = '';
-        document.getElementById('playerView').style.display = 'none';
-        document.getElementById('resultsGrid').style.display = 'grid';
-        
-        // If the search input is empty, reload recommended
-        if(!document.getElementById('searchInput').value.trim()) {
-             loadRecommended();
+        // Save progress to Firebase
+        if (window.saveEpisodeProgress) {
+            window.saveEpisodeProgress(currentAnimeId, currentAnimeTitle, epNum, totalEpisodes);
         }
     }
 
-    // Trigger search on Enter key
-    document.getElementById('searchInput').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            searchAnime();
+    // Go Back Button
+    function goBack() {
+        document.getElementById('playerView').style.display = 'none';
+        document.getElementById('resultsGrid').style.display = 'grid';
+        document.getElementById('videoPlayer').src = '';
+    }
+
+    // Initialize Home Page
+    loadRecommended();
+</script>
+
+<!-- FIREBASE BACKEND SCRIPT (Properly Isolated Module) -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Your actual configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDZ_wsa8mBunnpjefqPWrObMoWsel2TUH4",
+        authDomain: "pastpapergenie-auth.firebaseapp.com",
+        projectId: "pastpapergenie-auth",
+        storageBucket: "pastpapergenie-auth.firebasestorage.app",
+        messagingSenderId: "670440449105",
+        appId: "1:670440449105:web:e98ce9eb790bca2409c470",
+        measurementId: "G-4SP4GQFGPW"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    let currentUser = null;
+
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userProfile = document.getElementById('userProfile');
+
+    if(loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider).catch(err => console.error(err));
+        });
+    }
+
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth).catch(err => console.error(err));
+        });
+    }
+
+    // 1. Expose save function to the main script
+    window.saveEpisodeProgress = (animeId, title, epNum, totalEps) => {
+        if (currentUser && animeId) {
+            const userRef = doc(db, "users", currentUser.uid);
+            setDoc(userRef, {
+                animeId: animeId,
+                title: title,
+                epNum: epNum,
+                totalEps: totalEps,
+                lastWatched: new Date()
+            }, { merge: true });
+        }
+    };
+
+    // 2. Watch Auth State and Load Continue Watching UI
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            currentUser = user;
+            if(loginBtn) loginBtn.style.display = 'none';
+            if(logoutBtn) logoutBtn.style.display = 'inline-flex';
+            if(userProfile) {
+                userProfile.style.display = 'inline';
+                userProfile.innerText = `HELLO, ${user.displayName.toUpperCase()} `;
+            }
+
+            // Fetch last watched episode from Firestore
+            try {
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    showContinueWatching(data.animeId, data.title, data.epNum, data.totalEps);
+                }
+            } catch (err) {
+                console.error("Error fetching watch history:", err);
+            }
+            
+        } else {
+            currentUser = null;
+            if(loginBtn) loginBtn.style.display = 'inline-flex';
+            if(logoutBtn) logoutBtn.style.display = 'none';
+            if(userProfile) userProfile.style.display = 'none';
+            removeContinueWatching();
         }
     });
 
-    // Run on init
-    document.addEventListener('DOMContentLoaded', loadRecommended);
-</script>
-  <main class="content-container">
+    // 3. UI Builders for Continue Watching
+    function showContinueWatching(animeId, title, epNum, totalEps) {
+        removeContinueWatching();
+        
+        const grid = document.getElementById('resultsGrid');
+        if(!grid) return;
 
-</main>
+        const continueDiv = document.createElement('div');
+        continueDiv.id = "continueWatchingBanner";
+        continueDiv.style = "grid-column:1/-1; background:rgba(0,229,255,0.05); border:1px solid #00e5ff; padding:20px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;";
+        
+        continueDiv.innerHTML = `
+            <div>
+                <div style="font-family:var(--f3);font-size:10px;color:#00e5ff;letter-spacing:2px;margin-bottom:5px;">CONTINUE WATCHING</div>
+                <h3 style="font-family:var(--f1);color:#fff;font-size:16px;">${title} - Episode ${epNum}</h3>
+            </div>
+            <button class="cta-btn" style="border-color:#00e5ff; cursor:pointer;">RESUME</button>
+        `;
+        
+        continueDiv.querySelector('button').onclick = () => {
+            if(window.selectAnime) {
+                window.selectAnime(animeId, title, totalEps);
+                setTimeout(() => {
+                    const epBtn = document.getElementById(`ep-btn-${epNum}`);
+                    if(epBtn) {
+                        epBtn.click();
+                        epBtn.scrollIntoView({behavior: "smooth", block: "center"});
+                    }
+                }, 500);
+            }
+        };
+        
+        grid.prepend(continueDiv);
+    }
+
+    function removeContinueWatching() {
+        const existing = document.getElementById('continueWatchingBanner');
+        if (existing) existing.remove();
+    }
+</script>
 </body>
 </html>
