@@ -574,5 +574,63 @@
   <main class="content-container">
 
 </main>
+<!-- FIREBASE AUTHENTICATION SCRIPT -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  // Your Firebase configuration (using: pastpapergenie-auth)
+  const firebaseConfig = {
+    apiKey: "YOUR_FIREBASE_API_KEY", // Replace with your Web API Key from Firebase Console Settings
+    authDomain: "pastpapergenie-auth.firebaseapp.com",
+    projectId: "pastpapergenie-auth",
+    storageBucket: "pastpapergenie-auth.appspot.com",
+    messagingSenderId: "670440449105",
+    appId: "YOUR_FIREBASE_APP_ID" // Replace with your Web App ID from Firebase Console Settings
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const userProfile = document.getElementById('userProfile');
+
+  // Log in with Google
+  loginBtn.addEventListener('click', () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log("Logged in:", result.user);
+      })
+      .catch((error) => {
+        console.error("Sign-in failed:", error);
+      });
+  });
+
+  // Log out
+  logoutBtn.addEventListener('click', () => {
+    signOut(auth).then(() => {
+      console.log("Logged out successfully");
+    }).catch((error) => {
+      console.error("Logout failed:", error);
+    });
+  });
+
+  // Handle Authentication State Changes dynamically
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-flex';
+      userProfile.style.display = 'inline';
+      userProfile.innerText = `HELLO, ${user.displayName.toUpperCase()} `;
+    } else {
+      loginBtn.style.display = 'inline-flex';
+      logoutBtn.style.display = 'none';
+      userProfile.style.display = 'none';
+    }
+  });
+</script>
+
 </body>
 </html>
