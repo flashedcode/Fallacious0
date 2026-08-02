@@ -6,15 +6,11 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4807814255844437" crossorigin="anonymous"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DG2EVYCZE4"></script>
- <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyDZ_wsa8mBunnpjefqPWrObMoWsel2TUH4",
     authDomain: "pastpapergenie-auth.firebaseapp.com",
@@ -25,10 +21,46 @@
     measurementId: "G-4SP4GQFGPW"
   };
 
-  // Initialize Firebase
+  // Initialize once
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // Grab UI elements
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const userProfile = document.getElementById('userProfile');
+
+  // Login handler
+  loginBtn.addEventListener('click', () => {
+    signInWithPopup(auth, provider)
+      .then((result) => console.log("Logged in:", result.user))
+      .catch((error) => console.error("Sign-in failed:", error));
+  });
+
+  // Logout handler
+  logoutBtn.addEventListener('click', () => {
+    signOut(auth)
+      .then(() => console.log("Logged out"))
+      .catch((error) => console.error("Logout failed:", error));
+  });
+
+  // Auth state observer
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-flex';
+      userProfile.style.display = 'inline';
+      userProfile.innerText = `HELLO, ${user.displayName.toUpperCase()} `;
+    } else {
+      loginBtn.style.display = 'inline-flex';
+      logoutBtn.style.display = 'none';
+      userProfile.style.display = 'none';
+    }
+  });
 </script>
+
 <script>
  
   window.dataLayer = window.dataLayer || [];
