@@ -24,11 +24,11 @@
 ---
 
 ## 📸 Glimpse of the Homepage
-![image-alt](image_2026-08-03_143550805.png)
+![image-alt](/screenshots/Homepage.png)
 
 ---
 ## 🎮 Game Library (`/select/`)
-
+![image-alt](/screenshots/select.png)
 The Game Library is a lightweight, client-side arcade hosting **730+ unblocked browser games** with zero installs, logins, or load delays.
 
 ### Highlights
@@ -39,7 +39,7 @@ The Game Library is a lightweight, client-side arcade hosting **730+ unblocked b
 ---
 
 ## 🎬 Anime Streaming Hub (`/anime/`)
-
+![image-alt](/screenshots/anime.png)
 The Anime Hub is a custom serverless streaming platform that lets users search, discover, and stream thousands of anime shows directly in the browser.
 
 ### Highlights
@@ -50,7 +50,7 @@ The Anime Hub is a custom serverless streaming platform that lets users search, 
 
 ---
 ## 📰 Articles & Guides (`/articles/`)
-
+![image-alt](/screenshots/articles.png)
 The Articles page is a Guide hub delivering gaming guides, lore breakdowns, and browser gaming insights.
 
 ### Highlights
@@ -64,7 +64,7 @@ The Articles page is a Guide hub delivering gaming guides, lore breakdowns, and 
 ## 🚀 Getting Started
 
 Since PastPaperGenie is a static site, setup is practically instantaneous.
-
+But the massive game library that is over 8 gb will probably be a problem and deployment on github pages with take a long while (30 mins - 1 hour) even for minor changes 
 ### Prerequisites
 You only need a modern web browser. No Node.js, Python, or database setup is required.
 
