@@ -1,4 +1,4 @@
-# 🧞‍♂️ PastPaperGenie
+#  PastPaperGenie
 
 **PastPaperGenie** is the ultimate web-based hub for unblocked games and free anime streaming. Built with a highly responsive, custom-animated cyberpunk UI, it allows users to play over 730+ classic and modern browser games instantly—no downloads, no installations, and no blocks.
 
