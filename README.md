@@ -8,7 +8,7 @@
 
 ---
 ## ✨ Features
-
+*   **Site Unblocker (Proxy to unblock any site):** if you want to access any website that may be blocked by organisation use our site unblocker by going to the games section and searching up "unblocker"
 *   **🎮 Massive Game Library (730+ Titles):** Instantly play popular games directly in the browser. Featured games include:
     *   *Minecraft 1.20.4* (WASM/JS build)
     *   *Five Nights at Freddy's (FNAF)*
