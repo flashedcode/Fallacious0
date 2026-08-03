@@ -49,7 +49,17 @@ The Anime Hub is a custom serverless streaming platform that lets users search, 
 * **Futuristic Cyberpunk Theme:** Designed with dynamic floating canvas grids, glowing neon UI elements, and custom smooth cursor tracking.
 
 ---
+## 📰 Articles & Guides (`/articles/`)
 
+The Articles page is a SEO-optimized hub delivering gaming guides, lore breakdowns, and browser gaming insights.
+
+### Highlights
+* **Comprehensive Game Guides:** Deep-dives into popular titles like *Minecraft*, *FNAF Lore*, *Friday Night Funkin'*, *ULTRAKILL*, and *Undertale*.
+* **Responsive Editorial Layout:** Features a main spotlight card for trending reads alongside a clean 2-column grid system for standard articles.
+* **SEO & Monetization Optimized:** Built with targeted SEO copy blocks, ad scripts, and structured metadata for search engine indexing.
+* **Interactive Cyberpunk Design:** Styled with animated grid backgrounds, smooth reveal-on-scroll animations, and hover-state visual cues.
+  
+---
 
 ## 🚀 Getting Started
 
