@@ -24,7 +24,7 @@
 ---
 
 ## 📸 Glimpse of the Homepage
-![image-alt](/screenshots/Homepage.png)
+![image-alt](/screenshots/homepage.png)
 
 ---
 ## 🎮 Game Library (`/select/`)
