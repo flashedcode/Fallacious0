@@ -26,7 +26,7 @@
 ## 📸 Glimpse of the UI
 
 *(Add a screenshot or GIF of your vibrant neon homepage here!)*
-> `![Homepage Preview](link-to-your-screenshot.png)`
+> `![Homepage Preview](image_2026-08-03_143550805.png)`
 
 ---
 
