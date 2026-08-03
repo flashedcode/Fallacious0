@@ -27,6 +27,36 @@
 ![image-alt](image_2026-08-03_143550805.png)
 
 ---
+## 🎬 Deep Dive: Anime Streaming Hub (`/anime/`)
+
+The Anime Streaming Hub is a fully custom, serverless web application built directly into PastPaperGenie. It allows users to search, discover, and stream thousands of anime titles for free without leaving the site. 
+
+### ✨ Key Features
+![image-alt](anime.png)
+*   **Massive Anime Database:** Powered by the **AniList GraphQL API**, the page dynamically fetches high-quality cover art, localized titles (Dub/Sub), and episode counts in real-time.
+*   **Seamless Streaming Integration:** Video playback is handled seamlessly through an embedded iframe utilizing the `megaplay.buzz` streaming backend. 
+*   **Smart Episode Routing:** Dynamically generates episode selection grids based on the specific anime's total episode count (handling up to 1,500+ episodes).
+*   **Cloud Progress Tracking (Firebase):** Users can log in using Google Authentication. Their watch progress (current anime, episode number) is automatically saved to **Cloud Firestore** so they can pick up right where they left off.
+*   **Immersive Cyberpunk UI/UX:** 
+    *   **Custom Interactions:** Features a custom trailing cursor (`#cdot` and `#cring`) that expands over interactive elements.
+    *   **Dynamic Backgrounds:** Utilizes CSS-only floating orbs, moving grid lines, and glowing neon pulses for a high-end, futuristic feel.
+    *   **Glassmorphism:** A frosted-glass navigation bar (`backdrop-filter: blur`) ensures the UI stays clean over the complex animated background.
+
+### 🛠️ Technical Architecture
+
+The page is built to be lightweight and fast, relying on vanilla web technologies and modern cloud services rather than heavy frontend frameworks.
+
+*   **Frontend:** HTML5, Vanilla CSS3 (CSS Variables, Keyframe Animations), and Vanilla JavaScript (ES6).
+*   **Data Fetching:** Fetch API used to send `POST` requests to `https://graphql.anilist.co`.
+*   **Authentication & Database:** Firebase v10 (Modular SDK) handling Google Auth (`signInWithPopup`) and Firestore document writes/reads.
+*   **Monetization & Analytics:** Pre-configured with Google AdSense and Google Analytics (gtag.js).
+
+### 🔍 How It Works Under the Hood
+
+1.  **Initial Load:** The page immediately fires `loadRecommended()`, querying the AniList API for a hardcoded array of popular anime IDs to populate the "Trending Hits" feed.
+2.  **Search Functionality:** When a user types a query, `searchAnime()` sends a GraphQL search request to AniList, replacing the grid with relevant results.
+3.  **Video Player Instantiation:** Clicking an anime card triggers `selectAnime()`. This hides the search grid, reveals the video player (`#playerView`), and dynamically renders a button for every episode.
+4.  **Playback & Tracking:** Clicking an episode button updates the video iframe `src`, highlights the active episode via DOM manipulation, and triggers `saveEpisodeProgress()` to sync the user's location to Firebase.
 
 ## 🛠️ Tech Stack
 
