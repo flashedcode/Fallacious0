@@ -23,51 +23,33 @@
 
 ---
 
-## 📸 Glimpse of the UI
+## 📸 Glimpse of the Homepage
 ![image-alt](image_2026-08-03_143550805.png)
 
 ---
-## 🎬 Deep Dive: Anime Streaming Hub (`/anime/`)
+## 🎮 Game Library (`/select/`)
 
-The Anime Streaming Hub is a fully custom, serverless web application built directly into PastPaperGenie. It allows users to search, discover, and stream thousands of anime titles for free without leaving the site. 
+The Game Library is a lightweight, client-side arcade hosting **730+ unblocked browser games** with zero installs, logins, or load delays.
 
-### ✨ Key Features
-![image-alt](anime.png)
-*   **Massive Anime Database:** Powered by the **AniList GraphQL API**, the page dynamically fetches high-quality cover art, localized titles (Dub/Sub), and episode counts in real-time.
-*   **Seamless Streaming Integration:** Video playback is handled seamlessly through an embedded iframe utilizing the `megaplay.buzz` streaming backend. 
-*   **Smart Episode Routing:** Dynamically generates episode selection grids based on the specific anime's total episode count (handling up to 1,500+ episodes).
-*   **Cloud Progress Tracking (Firebase):** Users can log in using Google Authentication. Their watch progress (current anime, episode number) is automatically saved to **Cloud Firestore** so they can pick up right where they left off.
-*   **Immersive Cyberpunk UI/UX:** 
-    *   **Custom Interactions:** Features a custom trailing cursor (`#cdot` and `#cring`) that expands over interactive elements.
-    *   **Dynamic Backgrounds:** Utilizes CSS-only floating orbs, moving grid lines, and glowing neon pulses for a high-end, futuristic feel.
-    *   **Glassmorphism:** A frosted-glass navigation bar (`backdrop-filter: blur`) ensures the UI stays clean over the complex animated background.
+### Highlights
+* **730+ Instant Titles:** Plays everything from WebAssembly Minecraft builds (Eaglercraft) and FNAF to classic Flash emulations and indie hits.
+* **Instant Filtering:** Zero-latency search bar and 1-click category pills (*Sandbox, Horror, Shooter, RPG, Rhythm, Strategy, Platformer*).
+* **Stealth Tools:** Built-in emergency Panic Key (`ESC` redirects instantly to Google Classroom) and tab cloaking (`/cloak.html`).
+* **Smart Ingestion Engine:** Combines curated featured titles with an automated dynamic parser that cleans, formats, and deduplicates raw game files on the fly.
+---
 
-### 🛠️ Technical Architecture
+## 🎬 Anime Streaming Hub (`/anime/`)
 
-The page is built to be lightweight and fast, relying on vanilla web technologies and modern cloud services rather than heavy frontend frameworks.
+The Anime Hub is a custom serverless streaming platform that lets users search, discover, and stream thousands of anime shows directly in the browser.
 
-*   **Frontend:** HTML5, Vanilla CSS3 (CSS Variables, Keyframe Animations), and Vanilla JavaScript (ES6).
-*   **Data Fetching:** Fetch API used to send `POST` requests to `https://graphql.anilist.co`.
-*   **Authentication & Database:** Firebase v10 (Modular SDK) handling Google Auth (`signInWithPopup`) and Firestore document writes/reads.
-*   **Monetization & Analytics:** Pre-configured with Google AdSense and Google Analytics (gtag.js).
-
-### 🔍 How It Works Under the Hood
-
-1.  **Initial Load:** The page immediately fires `loadRecommended()`, querying the AniList API for a hardcoded array of popular anime IDs to populate the "Trending Hits" feed.
-2.  **Search Functionality:** When a user types a query, `searchAnime()` sends a GraphQL search request to AniList, replacing the grid with relevant results.
-3.  **Video Player Instantiation:** Clicking an anime card triggers `selectAnime()`. This hides the search grid, reveals the video player (`#playerView`), and dynamically renders a button for every episode.
-4.  **Playback & Tracking:** Clicking an episode button updates the video iframe `src`, highlights the active episode via DOM manipulation, and triggers `saveEpisodeProgress()` to sync the user's location to Firebase.
-
-## 🛠️ Tech Stack
-
-This project is built using purely static front-end technologies, making it lightning-fast and incredibly easy to host:
-
-*   **HTML5:** Semantic structure and SEO metadata.
-*   **CSS3:** Native CSS variables, complex keyframe animations, flexbox/grid layouts, and glassmorphism (backdrop-filters).
-*   **Vanilla JavaScript (ES6+):** Intersection Observers for scroll reveals, custom mouse tracking, and smooth page transition routing.
-*   **Fonts:** Google Fonts (*Orbitron, Exo 2, Space Mono, Cinzel Decorative*).
+### Highlights
+* **AniList API Integration:** Real-time search and metadata fetching (covers, episode counts, titles) via AniList's GraphQL API.
+* **Seamless Embedded Player:** High-performance video playback with dynamically generated episode selection grids supporting up to 1,500+ episodes.
+* **Firebase Progress Sync:** Google Auth integration that automatically saves watching progress to Cloud Firestore so users can resume anytime.
+* **Futuristic Cyberpunk Theme:** Designed with dynamic floating canvas grids, glowing neon UI elements, and custom smooth cursor tracking.
 
 ---
+
 
 ## 🚀 Getting Started
 
