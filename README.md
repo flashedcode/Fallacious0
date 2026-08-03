@@ -51,7 +51,7 @@ The Anime Hub is a custom serverless streaming platform that lets users search, 
 ---
 ## 📰 Articles & Guides (`/articles/`)
 
-The Articles page is a SEO-optimized hub delivering gaming guides, lore breakdowns, and browser gaming insights.
+The Articles page is a Guide hub delivering gaming guides, lore breakdowns, and browser gaming insights.
 
 ### Highlights
 * **Comprehensive Game Guides:** Deep-dives into popular titles like *Minecraft*, *FNAF Lore*, *Friday Night Funkin'*, *ULTRAKILL*, and *Undertale*.
