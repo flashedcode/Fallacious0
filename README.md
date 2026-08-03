@@ -24,8 +24,7 @@
 ---
 
 ## 📸 Glimpse of the UI
-
-> (image_2026-08-03_143550805.png)
+![image-alt](image_2026-08-03_143550805.png)
 
 ---
 
