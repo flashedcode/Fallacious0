@@ -3,7 +3,10 @@
 **PastPaperGenie** is the ultimate web-based hub for unblocked games and free anime streaming. Built with a highly responsive, custom-animated cyberpunk UI, it allows users to play over 730+ classic and modern browser games instantly—no downloads, no installations, and no blocks.
 
 ---
+## 📸 Glimpse of the Homepage
+![image-alt](/screenshots/homepage.png)
 
+---
 ## ✨ Features
 
 *   **🎮 Massive Game Library (730+ Titles):** Instantly play popular games directly in the browser. Featured games include:
@@ -21,10 +24,6 @@
     *   Seamless page transitions using vanilla JavaScript.
 *   **📱 Fully Responsive:** Carefully optimized grid layouts that work flawlessly across desktop, tablet, and mobile devices.
 
----
-
-## 📸 Glimpse of the Homepage
-![image-alt](/screenshots/homepage.png)
 
 ---
 ## 🎮 Game Library (`/select/`)
