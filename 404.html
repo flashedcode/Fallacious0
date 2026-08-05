@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | PastPaperGenie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600&family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #04040e;
+            --c1: #00e5ff;
+            --c2: #ae45ff;
+            --c3: #ff1870;
+            --txt: #c8ccee;
+            --dim: #6a6d8e;
+            --f1: 'Orbitron', monospace;
+            --f2: 'Exo 2', sans-serif;
+            --f3: 'Space Mono', monospace;
+            --f4: 'Cinzel Decorative', serif;
+        }
+        body {
+            background: var(--bg);
+            color: var(--txt);
+            font-family: var(--f2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        /* Background Grid & Ambient Glow Effects */
+        .bg-fx {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .bg-fx::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 15% 60%, rgba(174,69,255,0.07) 0%, transparent 55%),
+                        radial-gradient(ellipse at 85% 20%, rgba(0,229,255,0.09) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 90%, rgba(255,24,112,0.05) 0%, transparent 45%);
+        }
+        .bg-fx::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(0,229,255,0.15), inset 0 0 10px rgba(0,229,255,0.05); }
+            50% { box-shadow: 0 0 35px rgba(0,229,255,0.3), inset 0 0 20px rgba(0,229,255,0.1); }
+        }
+        @keyframes borderGlow {
+            0%, 100% { border-color: rgba(0,229,255,0.15); }
+            50% { border-color: rgba(0,229,255,0.4); }
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 540px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            padding: 45px 35px;
+            border-radius: 12px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            animation: borderGlow 4s ease-in-out infinite;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+        .brand {
+            font-family: var(--f4);
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            text-shadow: 0 0 14px rgba(0,229,255,0.4);
+        }
+        .brand span { color: var(--c1); text-shadow: 0 0 10px var(--c1); }
+        .error-code {
+            font-family: var(--f1);
+            font-size: clamp(60px, 12vw, 90px);
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 25px rgba(0,229,255,0.5), 0 0 50px rgba(174,69,255,0.3);
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+            line-height: 1;
+        }
+        .error-code span { color: var(--c3); text-shadow: 0 0 25px rgba(255,24,112,0.6); }
+        h1 {
+            font-family: var(--f1);
+            font-size: clamp(16px, 3vw, 20px);
+            font-weight: 700;
+            color: #e4e8ff;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        p {
+            font-family: var(--f3);
+            font-size: 11px;
+            color: var(--dim);
+            letter-spacing: 1.5px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            line-height: 1.6;
+        }
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 30px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(174, 69, 255, 0.12));
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            color: #fff;
+            font-family: var(--f1);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: neonPulse 3s ease-in-out infinite;
+        }
+        .home-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.22), rgba(174, 69, 255, 0.22));
+            box-shadow: 0 0 35px rgba(0, 229, 255, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-fx"></div>
+    <div class="container">
+        <div class="brand">PASTPAPER<span>GENIE</span></div>
+        <div class="error-code">4<span>0</span>4</div>
+        <h1>Page Not Found</h1>
+        <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        <a href="https://pastpapergenie.co.uk/" class="home-btn">&larr; BACK TO HOME</a>
+    </div>
+</body>
+</html>
