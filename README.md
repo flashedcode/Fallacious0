@@ -69,4 +69,4 @@ You only need a modern web browser. No Node.js, Python, or database setup is req
 ### Local Development
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/flashedcode/pastpapergenie.git](https://github.com/flashedcode/pastpapergenie.git)
+   git clone https://github.com/flashedcode/pastpapergenie.git
