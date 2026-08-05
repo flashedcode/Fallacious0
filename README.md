@@ -65,8 +65,11 @@ Since PastPaperGenie is a static site, setup is practically instantaneous.
 But the massive game library that is over 8 gb will probably be a problem and deployment on github pages with take a long while (30 mins - 1 hour) even for minor changes 
 ### Prerequisites
 You only need a modern web browser. No Node.js, Python, or database setup is required.
-
+---
+### PLEASE STAR PROJECT BEFORE YOU FORK AS A TOKEN OF APPRECIATION 
+---
 ### Local Development
 1. Clone the repository:
    ```bash
    git clone https://github.com/flashedcode/pastpapergenie.git
+
