@@ -333,6 +333,104 @@ function toggleMenu(){const m=document.getElementById('mmenu');m.style.display=m
 (()=>{const allPill=document.getElementById('pill-all');if(allPill){allPill.style.color='var(--c1)';allPill.style.borderColor='rgba(0,229,255,0.5)';allPill.style.background='rgba(0,229,255,0.1)';}})();
 </script>
 
+  <div class="glow-divider"></div>
+
+<section id="recommended-anime" style="padding:80px 5%;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;">
+      <div>
+        <div class="section-label">RECOMMENDED</div>
+        <div class="section-title">Trending Anime Picks</div>
+      </div>
+      <a href="/anime/" style="font-family:var(--f3);font-size:10px;letter-spacing:3px;color:var(--c1);opacity:0.75;">VIEW ALL →</a>
+    </div>
+
+    <div id="recommendedGrid" class="games-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <!-- cards will be injected here -->
+      <div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-family:var(--f3);">Loading recommended anime...</div>
+    </div>
+
+    <div style="text-align:center;margin-top:36px;">
+      <a href="/anime/" class="cta-btn" style="animation:none;">BROWSE ALL ANIME →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(async function autoOpenFromQuery() {
+  const params = new URLSearchParams(location.search);
+  const idParam = params.get('id');
+  const epParam = params.get('ep');
+
+  if (!idParam) return; // no id in URL, nothing to do
+
+  const animeId = parseInt(idParam, 10);
+  const episodeToPlay = epParam ? Math.max(1, parseInt(epParam, 10)) : 1;
+
+  // Wait for selectAnime to be available (in case this runs before your functions are parsed)
+  const waitForSelect = () => new Promise(resolve => {
+    let tries = 0;
+    const t = setInterval(() => {
+      if (typeof window.selectAnime === 'function') {
+        clearInterval(t);
+        resolve(true);
+      } else if (++tries > 30) { // ~3s timeout
+        clearInterval(t);
+        resolve(false);
+      }
+    }, 100);
+  });
+
+  const ready = await waitForSelect();
+  if (!ready) {
+    console.warn('selectAnime not available; cannot auto-open anime from URL.');
+    return;
+  }
+
+  // Fetch anime metadata from Anilist (so we have title and episodes)
+  const query = `
+    query ($id: Int) {
+      Media(id: $id, type: ANIME) {
+        id
+        title { romaji english native }
+        episodes
+      }
+    }
+  `;
+
+  try {
+    const res = await fetch('https://graphql.anilist.co', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables: { id: animeId } })
+    });
+    const json = await res.json();
+    const media = json?.data?.Media;
+
+    if (!media) {
+      console.warn('No anime found for id:', animeId);
+      return;
+    }
+
+    const title = media.title.english || media.title.romaji || media.title.native || 'Untitled';
+    const episodes = media.episodes || 12;
+
+    // Call your existing selectAnime to open player & build episode list
+    window.selectAnime(media.id, title, episodes);
+
+    // Wait a little to ensure episode buttons are built, then play requested episode
+    setTimeout(() => {
+      if (typeof window.playEpisode === 'function') {
+        window.playEpisode(episodeToPlay);
+        // Scroll to player view (optional)
+        window.scrollTo({ top: 180, behavior: 'smooth' });
+      }
+    }, 450);
+  } catch (err) {
+    console.error('Failed to fetch anime data for auto-open:', err);
+  }
+})();
+</script>
      <!-- HIGH-VALUE SEO CONTENT SECTION (AdSense & Search Console Optimizer) -->
   <section style="padding:80px 5%; background:rgba(0,0,0,0.4); border-top:1px solid rgba(0,229,255,0.07);">
     <div style="max-width:900px; margin:0 auto; text-align:left;" class="reveal">
