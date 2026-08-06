@@ -357,81 +357,75 @@ function toggleMenu(){const m=document.getElementById('mmenu');m.style.display=m
 </section>
 
 <script>
-(async function autoOpenFromQuery() {
-  const params = new URLSearchParams(location.search);
-  const idParam = params.get('id');
-  const epParam = params.get('ep');
+  (async function renderRecommendedAnime() {
+    const grid = document.getElementById('recommendedGrid');
+    if (!grid) return;
 
-  if (!idParam) return; // no id in URL, nothing to do
+    // Replace or extend this list with IDs you prefer.
+    const recommendedIds = [174154, 145064, 40748, 1735, 269, 21, 101922, 11061, 16498];
 
-  const animeId = parseInt(idParam, 10);
-  const episodeToPlay = epParam ? Math.max(1, parseInt(epParam, 10)) : 1;
-
-  // Wait for selectAnime to be available (in case this runs before your functions are parsed)
-  const waitForSelect = () => new Promise(resolve => {
-    let tries = 0;
-    const t = setInterval(() => {
-      if (typeof window.selectAnime === 'function') {
-        clearInterval(t);
-        resolve(true);
-      } else if (++tries > 30) { // ~3s timeout
-        clearInterval(t);
-        resolve(false);
+    const query = `
+      query ($idIn: [Int]) {
+        Page(perPage: 12) {
+          media(id_in: $idIn, type: ANIME, sort: POPULARITY_DESC) {
+            id
+            title { romaji english native }
+            coverImage { large }
+            episodes
+            description (asHtml: false)
+          }
+        }
       }
-    }, 100);
-  });
+    `;
+    try {
+      const res = await fetch('https://graphql.anilist.co', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, variables: { idIn: recommendedIds } })
+      });
+      const json = await res.json();
+      const list = json?.data?.Page?.media || [];
 
-  const ready = await waitForSelect();
-  if (!ready) {
-    console.warn('selectAnime not available; cannot auto-open anime from URL.');
-    return;
-  }
-
-  // Fetch anime metadata from Anilist (so we have title and episodes)
-  const query = `
-    query ($id: Int) {
-      Media(id: $id, type: ANIME) {
-        id
-        title { romaji english native }
-        episodes
+      grid.innerHTML = '';
+      if (list.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-family:var(--f3);">No recommendations available.</div>';
+        return;
       }
+
+      list.forEach(anime => {
+        const title = anime.title.english || anime.title.romaji || anime.title.native || 'Untitled';
+        const eps = anime.episodes || '?';
+        const card = document.createElement('div');
+        card.className = 'game-card reveal';
+        card.innerHTML = `
+          <div style="font-family:var(--f3);font-size:9px;letter-spacing:3px;color:var(--c1);margin-bottom:10px;">ANIME</div>
+          <div style="aspect-ratio:3/4;overflow:hidden;background:#07071a;border-radius:6px;margin-bottom:14px;position:relative;">
+            <img src="${anime.coverImage.large}" alt="${title}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;">
+            <span style="position:absolute;bottom:8px;right:8px;background:rgba(4,4,14,0.85);font-family:var(--f3);font-size:9px;padding:3px 6px;border-radius:4px;color:var(--c1);border:1px solid rgba(0,229,255,0.2);">${eps} EPS</span>
+          </div>
+          <h3 style="font-family:var(--f1);font-size:14px;font-weight:700;margin-bottom:8px;color:#e4e8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</h3>
+          <p style="font-size:13px;color:var(--dim);margin-bottom:16px;line-height:1.5;max-height:66px;overflow:hidden;">${(anime.description || '').replace(/<\/?[^>]+(>|$)/g, '').slice(0, 220)}</p>
+          <a class="play-btn" href="/anime/?id=${anime.id}" style="display:inline-flex;align-items:center;gap:8px;" title="Watch ${title}">▶ WATCH</a>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Re-observe reveal animation if IntersectionObserver is used elsewhere on the page
+      if (window.IntersectionObserver && typeof observeReveal === 'function') {
+        document.querySelectorAll('#recommendedGrid .reveal').forEach(el => observeReveal(el));
+      } else {
+        // If page uses the IntersectionObserver instance from your homepage, manually add 'revealed' after a short delay
+        setTimeout(() => {
+          document.querySelectorAll('#recommendedGrid .reveal').forEach(el => el.classList.add('revealed'));
+        }, 200);
+      }
+    } catch (err) {
+      console.error('Recommended anime fetch failed:', err);
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--c3);font-family:var(--f3);">Failed to load recommendations.</div>';
     }
-  `;
-
-  try {
-    const res = await fetch('https://graphql.anilist.co', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, variables: { id: animeId } })
-    });
-    const json = await res.json();
-    const media = json?.data?.Media;
-
-    if (!media) {
-      console.warn('No anime found for id:', animeId);
-      return;
-    }
-
-    const title = media.title.english || media.title.romaji || media.title.native || 'Untitled';
-    const episodes = media.episodes || 12;
-
-    // Call your existing selectAnime to open player & build episode list
-    window.selectAnime(media.id, title, episodes);
-
-    // Wait a little to ensure episode buttons are built, then play requested episode
-    setTimeout(() => {
-      if (typeof window.playEpisode === 'function') {
-        window.playEpisode(episodeToPlay);
-        // Scroll to player view (optional)
-        window.scrollTo({ top: 180, behavior: 'smooth' });
-      }
-    }, 450);
-  } catch (err) {
-    console.error('Failed to fetch anime data for auto-open:', err);
-  }
-})();
+  })();
 </script>
-     <!-- HIGH-VALUE SEO CONTENT SECTION (AdSense & Search Console Optimizer) -->
+     
   <section style="padding:80px 5%; background:rgba(0,0,0,0.4); border-top:1px solid rgba(0,229,255,0.07);">
     <div style="max-width:900px; margin:0 auto; text-align:left;" class="reveal">
       <div class="section-label">ABOUT PASTPAPERGENIE</div>
