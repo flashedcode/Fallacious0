@@ -221,10 +221,11 @@
         </div>
     </div>
 
+    <!-- Continue Watching Section -->
+    <div id="continueWatchingContainer"></div>
 
-<div id="continueWatchingContainer"></div>
-
-<div id="resultsGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:20px;">
+    <!-- Results Grid -->
+    <div id="resultsGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:20px;">
         <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--dim);">
             <p style="font-family:var(--f3);font-size:11px;letter-spacing:2px;">Type an anime name above to begin streaming one of our 1000+ anime collection.</p>
         </div>
@@ -343,7 +344,6 @@
     async function loadRecommended() {
         const grid = document.getElementById('resultsGrid');
         if(!grid) return;
-        const banner = document.getElementById('continueWatchingBanner');
         grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c1);">Loading recommended hits...</div>';
 
         const graphqlQuery = `
@@ -369,11 +369,9 @@
             const animeList = data.data.Page.media;
 
             grid.innerHTML = '<div style="grid-column:1/-1;margin-bottom:5px;display:flex;align-items:center;gap:15px;"><div style="height:1px;background:linear-gradient(90deg,var(--c1),transparent);flex:1;"></div><div style="font-family:var(--f3);font-size:12px;letter-spacing:4px;color:var(--c1);text-transform:uppercase;">Trending Hits</div><div style="height:1px;background:linear-gradient(270deg,var(--c1),transparent);flex:1;"></div></div>';
-            if(banner) grid.prepend(banner);
             renderCards(animeList, grid);
         } catch (err) {
             grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--dim);">Type an anime name above to begin streaming.</div>';
-            if(banner) grid.prepend(banner);
         }
     }
 
@@ -382,7 +380,6 @@
         if (!query) { loadRecommended(); return; }
 
         const grid = document.getElementById('resultsGrid');
-        const banner = document.getElementById('continueWatchingBanner');
         grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c1);">Searching database...</div>';
 
         const graphqlQuery = `
@@ -408,7 +405,6 @@
             const animeList = data.data.Page.media;
 
             grid.innerHTML = '';
-            if(banner) grid.prepend(banner);
             
             if (animeList.length === 0) {
                 grid.innerHTML += '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--dim);">No anime found matching your search.</div>';
@@ -417,7 +413,6 @@
             renderCards(animeList, grid);
         } catch (err) {
             grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--f3);color:var(--c3);">Failed to fetch search results. Check your connection.</div>';
-            if(banner) grid.prepend(banner);
         }
     }
 
@@ -442,7 +437,7 @@
         });
     }
 
-    window.selectAnime = function(id, title, eps) {
+    window.selectAnime = function(id, title, eps, startEp = 1) {
         currentAnimeId = id;
         currentAnimeTitle = title;
         totalEpisodes = eps || 12;
@@ -453,7 +448,7 @@
         document.getElementById('episodeCountBadge').innerText = `${totalEpisodes} Episodes`;
 
         buildEpisodeList();
-        playEpisode(1);
+        playEpisode(startEp);
         window.scrollTo({ top: 180, behavior: 'smooth' });
     }
 
@@ -583,12 +578,12 @@
 
     function showContinueWatching(animeId, title, epNum, totalEps) {
         removeContinueWatching();
-        const grid = document.getElementById('resultsGrid');
-        if(!grid) return;
+        const container = document.getElementById('continueWatchingContainer');
+        if(!container) return;
 
         const continueDiv = document.createElement('div');
         continueDiv.id = "continueWatchingBanner";
-        continueDiv.style = "grid-column:1/-1; background:rgba(0,229,255,0.05); border:1px solid #00e5ff; padding:20px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;";
+        continueDiv.style = "background:rgba(0,229,255,0.05); border:1px solid #00e5ff; padding:20px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;";
         
         continueDiv.innerHTML = `
             <div>
@@ -600,17 +595,10 @@
         
         continueDiv.querySelector('button').onclick = () => {
             if(window.selectAnime) {
-                window.selectAnime(animeId, title, totalEps);
-                setTimeout(() => {
-                    const epBtn = document.getElementById(`ep-btn-${epNum}`);
-                    if(epBtn) {
-                        epBtn.click();
-                        epBtn.scrollIntoView({behavior: "smooth", block: "center"});
-                    }
-                }, 500);
+                window.selectAnime(animeId, title, totalEps, epNum);
             }
         };
-        grid.prepend(continueDiv);
+        container.appendChild(continueDiv);
     }
 
     function removeContinueWatching() {
@@ -622,4 +610,5 @@
   <div class="glow-divider"></div>
 </body>
 </html>
+
 
